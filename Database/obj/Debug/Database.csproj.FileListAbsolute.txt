@@ -1,0 +1,16 @@
+C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\Database\bin\Debug\Database.dll
+C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\Database\bin\Debug\Database.pdb
+C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\Database\bin\Debug\Npgsql.dll
+C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\Database\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\Database\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\Database\bin\Debug\System.ValueTuple.dll
+C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\Database\bin\Debug\Npgsql.pdb
+C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\Database\bin\Debug\Npgsql.xml
+C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\Database\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\Database\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\Database\bin\Debug\System.ValueTuple.xml
+C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\Database\obj\Debug\Database.csproj.AssemblyReference.cache
+C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\Database\obj\Debug\Database.csproj.CoreCompileInputs.cache
+C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\Database\obj\Debug\Database.csproj.CopyComplete
+C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\Database\obj\Debug\Database.dll
+C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\Database\obj\Debug\Database.pdb
