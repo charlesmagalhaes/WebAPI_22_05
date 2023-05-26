@@ -39,12 +39,18 @@ namespace Negocios
             return listaResponse;
         }
 
+        public void ExcluirProduto (int id)
+        {
+            dataAccessLayer.ExcluirProduto(id);
+        }
+
         private ProdutoResponse ConvertToResponse(ProdutoModel produtoModel)
         {
             // Lógica de conversão de ProdutoModel para ProdutoResponse
             ProdutoResponse produtoResponse = new ProdutoResponse();
 
             // Realize a conversão dos atributos relevantes
+            produtoResponse.Id = produtoModel.Id;
             produtoResponse.Nome = produtoModel.Nome;
             produtoResponse.Descricao = produtoModel.Descricao;
 

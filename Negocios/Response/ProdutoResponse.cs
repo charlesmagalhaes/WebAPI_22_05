@@ -18,6 +18,7 @@ namespace Negocios.Models
         {
             return new ProdutoResponse()
             {
+                Id = source.Id,
                 Nome = source.Nome,
                 Descricao = source.Descricao
             

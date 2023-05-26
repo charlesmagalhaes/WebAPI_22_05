@@ -14,6 +14,7 @@ namespace Database
         ProdutoModel GetProductById(int id);
         void SalvarProduto(ProdutoModel product); 
         List<ProdutoModel> GetListProduct();
+        void ExcluirProduto(int id);
     }
 
     public class DataAccessLayer : IDataAccessLayer
@@ -29,34 +30,60 @@ namespace Database
             _databaseConnection = databaseConnection;
         }
 
+        public void ExcluirProduto(int id)
+        {
+            using (var connection = _databaseConnection.GetConnection())
+            {
+                connection.Open();
+                using (var command = new Npgsql.NpgsqlCommand())
+                {
+                    try
+                    {
+                        command.Connection = connection;
+                        command.CommandType = CommandType.Text;
+
+                        command.CommandText = $"DELETE FROM produto WHERE id = {id}";
+                        command.ExecuteNonQuery();
+                    }
+                    catch (Npgsql.PostgresException e)
+                    {
+                        // Trate a exceção de violação de campo único aqui
+                        // Por exemplo, você pode exibir uma mensagem de erro para o usuário informando que o campo já existe
+                        Console.WriteLine("Erro excluir produto: " + e.Message);
+                    }
+                }
+            }
+        }
+
         public List<ProdutoModel> GetListProduct()
         {
-            var produto = new List<ProdutoModel>();
+            var produtos = new List<ProdutoModel>();
 
             using (var connection = _databaseConnection.GetConnection())
             {
                 connection.Open();
-                using (var command = new NpgsqlCommand("SELECT nome, descricao FROM produto", connection))
+                using (var command = new NpgsqlCommand("SELECT id, nome, descricao FROM produto", connection))
                 {
                     using (var reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            var produtoNovo = new ProdutoModel
+                            var produto = new ProdutoModel
                             {
-                                Nome = reader.GetString(0),
-                                Descricao = reader.GetString(1)
-                             
-
+                                Id = reader.GetInt32(0),
+                                Nome = reader.GetString(1),
+                                Descricao = reader.GetString(2)
                             };
-                            produto.Add(produtoNovo);
+
+                            produtos.Add(produto);
                         }
                     }
                 }
             }
 
-            return produto;
+            return produtos;
         }
+
 
         public ProdutoModel GetProductById(int id)
         {
