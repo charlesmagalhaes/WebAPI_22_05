@@ -6,7 +6,7 @@ using System.Web.Http;
 
 namespace WebAPI_22_05.Controllers
 {
-    public class ValuesController : ApiController
+    public class ProdutoController : ApiController
     {
         private ProductService _produtctService = new ProductService();
         

@@ -109,7 +109,7 @@ namespace Database
             using (var connection = _databaseConnection.GetConnection())
             {
                 connection.Open();
-                using (var command = new NpgsqlCommand("SELECT id, nome, descricao FROM produto", connection))
+                using (var command = new NpgsqlCommand("SELECT id, nome, descricao FROM produto ORDER BY nome", connection))
                 {
                     using (var reader = command.ExecuteReader())
                     {
