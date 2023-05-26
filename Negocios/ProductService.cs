@@ -39,10 +39,29 @@ namespace Negocios
             return listaResponse;
         }
 
+        public ProdutoResponse GetProduto(int id)
+        {
+            var resp = dataAccessLayer.GetProductById(id);
+            return (ProdutoResponse)resp;
+        }
+
         public void ExcluirProduto (int id)
         {
             dataAccessLayer.ExcluirProduto(id);
         }
+
+        public void AtualizarProduto(ProdutoRequest produto)
+        {
+            ProdutoModel novoProduto = new ProdutoModel
+            {
+                Id = produto.Id,
+                Nome = produto.Nome,
+                Descricao = produto.Descricao
+            };
+
+            dataAccessLayer.AtualizarProduto(novoProduto);
+        }
+
 
         private ProdutoResponse ConvertToResponse(ProdutoModel produtoModel)
         {

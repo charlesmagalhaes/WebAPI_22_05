@@ -1,13 +1,8 @@
 ﻿
 using Negocios;
 using Negocios.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using WebAPI_22_05.Models;
 
 namespace WebAPI_22_05.Controllers
 {
@@ -16,11 +11,11 @@ namespace WebAPI_22_05.Controllers
         private ProductService _produtctService = new ProductService();
         
 
-        // GET api/values
-       // public IEnumerable<string> Get()
-      //  {
-       //     return new string[] { "value1", "value2" };
-      //  }
+        //GET api/values
+       public ProdutoResponse Get(int id)
+       {
+           return _produtctService.GetProduto(id);
+        }
 
         // GET api/values/5
         public List<ProdutoResponse> Get()
@@ -36,8 +31,9 @@ namespace WebAPI_22_05.Controllers
         }
 
         // PUT api/values/5
-        public void Put(int id, [FromBody] string value)
+        public void Put([FromBody] ProdutoRequest produto)
         {
+            _produtctService.AtualizarProduto(produto);
         }
 
         // DELETE api/values/5

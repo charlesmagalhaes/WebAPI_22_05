@@ -41,9 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IPrecoService.cs" />
     <Compile Include="ProductService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Request\PrecoRequest.cs" />
+    <Compile Include="Request\ProdutoRequest.cs" />
     <Compile Include="Response\PrecoResponse.cs" />
+    <Compile Include="PrecoService.cs" />
     <Compile Include="Response\ProdutoResponse.cs" />
   </ItemGroup>
   <ItemGroup>
