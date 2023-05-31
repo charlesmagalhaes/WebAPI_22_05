@@ -49,6 +49,7 @@
     <Compile Include="Response\PrecoResponse.cs" />
     <Compile Include="PrecoService.cs" />
     <Compile Include="Response\ProdutoResponse.cs" />
+    <Compile Include="ResultadoExclusaoProduto.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Database\Database.csproj">

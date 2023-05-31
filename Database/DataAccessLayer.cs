@@ -9,12 +9,21 @@ using System.Threading.Tasks;
 
 namespace Database
 {
+
+
+    public class ExclusaoProdutoResponse
+    {
+        public bool Sucesso { get; set; }
+        public bool StatusRequisicao { get; set; }
+        public string Mensagem { get; set; }
+        public string MensagemErro { get; set; }
+    }
     public interface IDataAccessLayer
     {
         ProdutoModel GetProductById(int id);
         void SalvarProduto(ProdutoModel product); 
         List<ProdutoModel> GetListProduct();
-        void ExcluirProduto(int id);
+        ExclusaoProdutoResponse ExcluirProduto(int id);
         void AtualizarProduto(ProdutoModel product);
     }
 
@@ -77,30 +86,53 @@ namespace Database
         }
 
 
-        public void ExcluirProduto(int id)
+        public ExclusaoProdutoResponse ExcluirProduto(int id)
         {
+            var response = new ExclusaoProdutoResponse();
+
             using (var connection = _databaseConnection.GetConnection())
             {
                 connection.Open();
-                using (var command = new Npgsql.NpgsqlCommand())
+
+                using (var command = new NpgsqlCommand())
                 {
                     try
                     {
                         command.Connection = connection;
                         command.CommandType = CommandType.Text;
+                        command.CommandText = "SELECT excluir_produto(@id)";
+                        command.Parameters.AddWithValue("id", id);
 
-                        command.CommandText = $"DELETE FROM produto WHERE id = {id}";
-                        command.ExecuteNonQuery();
+                        var result = command.ExecuteScalar();
+
+                        if (result != null)
+                        {
+                            response.Sucesso = true;
+                            response.StatusRequisicao = true;
+                            response.Mensagem = "Exclusão feita com sucesso.";
+                        }
+                        else
+                        {
+                            response.Sucesso = false;
+                            response.StatusRequisicao = false;
+                            response.Mensagem = "Erro ao chamar a função de exclusão do produto.";
+                        }
                     }
-                    catch (Npgsql.PostgresException e)
+                    catch (NpgsqlException e)
                     {
-                        // Trate a exceção de violação de campo único aqui
-                        // Por exemplo, você pode exibir uma mensagem de erro para o usuário informando que o campo já existe
-                        Console.WriteLine("Erro excluir produto: " + e.Message);
+                        response.Sucesso = false;
+                        response.StatusRequisicao = false;
+                        response.MensagemErro = "Erro ao chamar a função de exclusão do produto: " + e.Message;
                     }
                 }
             }
+
+            return response;
         }
+
+
+
+
 
         public List<ProdutoModel> GetListProduct()
         {

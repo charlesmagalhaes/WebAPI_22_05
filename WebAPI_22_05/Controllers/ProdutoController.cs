@@ -37,9 +37,9 @@ namespace WebAPI_22_05.Controllers
         }
 
         // DELETE api/values/5
-        public void Delete(int id)
+        public ResultadoExclusaoProduto Delete(int id)
         {
-            _produtctService.ExcluirProduto(id);
+           return _produtctService.ExcluirProduto(id);
         }
     }
 }

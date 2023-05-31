@@ -8,7 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Negocios
+
 {
+
     public class ProductService
     {
         private DataAccessLayer dataAccessLayer = new DataAccessLayer();
@@ -44,11 +46,30 @@ namespace Negocios
             var resp = dataAccessLayer.GetProductById(id);
             return (ProdutoResponse)resp;
         }
-
-        public void ExcluirProduto (int id)
+        public ResultadoExclusaoProduto ExcluirProduto(int id)
         {
-            dataAccessLayer.ExcluirProduto(id);
+            ResultadoExclusaoProduto resultado = new ResultadoExclusaoProduto();
+
+            try
+            {
+                // Chamada ao método de acesso aos dados
+                var resp = dataAccessLayer.ExcluirProduto(id);
+
+                resultado.Sucesso = resp.Sucesso;
+                resultado.StatusRequisicao = resp.StatusRequisicao;
+                resultado.Mensagem = resp.Mensagem;
+                resultado.MensagemErro = resp.MensagemErro;
+            }
+            catch (Exception ex)
+            {
+                resultado.Sucesso = false;
+                resultado.StatusRequisicao = false;
+                resultado.MensagemErro = ex.Message;
+            }
+
+            return resultado;
         }
+
 
         public void AtualizarProduto(ProdutoRequest produto)
         {
