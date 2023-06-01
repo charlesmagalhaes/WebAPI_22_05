@@ -55,7 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataAccessLayerPreco .cs" />
-    <Compile Include="DataAccessLayer.cs" />
+    <Compile Include="DataAccessLayerProduto.cs" />
     <Compile Include="DatabaseConnection.cs" />
     <Compile Include="Models\PrecoModel.cs" />
     <Compile Include="Models\ProdutoModel.cs" />

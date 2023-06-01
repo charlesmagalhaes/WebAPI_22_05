@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,19 +25,19 @@ namespace Database
         ProdutoModel GetProductById(int id);
         void SalvarProduto(ProdutoModel product); 
         List<ProdutoModel> GetListProduct();
-        ExclusaoProdutoResponse ExcluirProduto(int id);
+        HttpResponseMessage ExcluirProduto(int id);
         void AtualizarProduto(ProdutoModel product);
     }
 
-    public class DataAccessLayer : IDataAccessLayer
+    public class DataAccessLayerProduto : IDataAccessLayer
     {
         private DatabaseConnection _databaseConnection = new DatabaseConnection();
 
-        public DataAccessLayer()
+        public DataAccessLayerProduto()
         {
         }
 
-        public DataAccessLayer(DatabaseConnection databaseConnection)
+        public DataAccessLayerProduto(DatabaseConnection databaseConnection)
         {
             _databaseConnection = databaseConnection;
         }
@@ -86,10 +88,9 @@ namespace Database
         }
 
 
-        public ExclusaoProdutoResponse ExcluirProduto(int id)
-        {
-            var response = new ExclusaoProdutoResponse();
 
+        public HttpResponseMessage ExcluirProduto(int id)
+        {
             using (var connection = _databaseConnection.GetConnection())
             {
                 connection.Open();
@@ -107,28 +108,30 @@ namespace Database
 
                         if (result != null)
                         {
-                            response.Sucesso = true;
-                            response.StatusRequisicao = true;
-                            response.Mensagem = "Exclusão feita com sucesso.";
+                            // Produto excluído com sucesso
+                            var response = new HttpResponseMessage(HttpStatusCode.OK);
+                            response.Content = new StringContent("Exclusão feita com sucesso.", Encoding.UTF8, "text/plain");
+                            return response;
                         }
                         else
                         {
-                            response.Sucesso = false;
-                            response.StatusRequisicao = false;
-                            response.Mensagem = "Erro ao chamar a função de exclusão do produto.";
+                            // Produto não foi excluído
+                            var response = new HttpResponseMessage(HttpStatusCode.Conflict);
+                            response.Content = new StringContent("Não foi possível excluir o produto.", Encoding.UTF8, "text/plain");
+                            return response;
                         }
                     }
                     catch (NpgsqlException e)
                     {
-                        response.Sucesso = false;
-                        response.StatusRequisicao = false;
-                        response.MensagemErro = "Erro ao chamar a função de exclusão do produto: " + e.Message;
+                        // Erro ao tentar excluir o produto
+                        var response = new HttpResponseMessage(HttpStatusCode.Conflict);
+                        response.Content = new StringContent("Erro ao tentar excluir: " + e.Message, Encoding.UTF8, "text/plain");
+                        return response;
                     }
                 }
             }
-
-            return response;
         }
+
 
 
 

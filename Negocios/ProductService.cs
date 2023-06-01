@@ -4,6 +4,7 @@ using Negocios.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,7 +14,7 @@ namespace Negocios
 
     public class ProductService
     {
-        private DataAccessLayer dataAccessLayer = new DataAccessLayer();
+        private DataAccessLayerProduto dataAccessLayer = new DataAccessLayerProduto();
 
 
         public void SalvarProduto(dynamic produto)
@@ -44,30 +45,20 @@ namespace Negocios
         public ProdutoResponse GetProduto(int id)
         {
             var resp = dataAccessLayer.GetProductById(id);
+            if (resp == null)
+            {
+                return new ProdutoResponse(); // Retorna um objeto vazio
+            }
             return (ProdutoResponse)resp;
         }
-        public ResultadoExclusaoProduto ExcluirProduto(int id)
+
+        public HttpResponseMessage ExcluirProduto(int id)
         {
-            ResultadoExclusaoProduto resultado = new ResultadoExclusaoProduto();
 
-            try
-            {
-                // Chamada ao método de acesso aos dados
+        
                 var resp = dataAccessLayer.ExcluirProduto(id);
-
-                resultado.Sucesso = resp.Sucesso;
-                resultado.StatusRequisicao = resp.StatusRequisicao;
-                resultado.Mensagem = resp.Mensagem;
-                resultado.MensagemErro = resp.MensagemErro;
-            }
-            catch (Exception ex)
-            {
-                resultado.Sucesso = false;
-                resultado.StatusRequisicao = false;
-                resultado.MensagemErro = ex.Message;
-            }
-
-            return resultado;
+                // Chamada ao método de acesso aos dados
+                return resp;
         }
 
 

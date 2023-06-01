@@ -2,6 +2,7 @@
 using Negocios;
 using Negocios.Models;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Web.Http;
 
 namespace WebAPI_22_05.Controllers
@@ -37,7 +38,7 @@ namespace WebAPI_22_05.Controllers
         }
 
         // DELETE api/values/5
-        public ResultadoExclusaoProduto Delete(int id)
+        public HttpResponseMessage Delete(int id)
         {
            return _produtctService.ExcluirProduto(id);
         }
