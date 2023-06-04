@@ -17,7 +17,7 @@ namespace Negocios
         private DataAccessLayerProduto dataAccessLayer = new DataAccessLayerProduto();
 
 
-        public void SalvarProduto(dynamic produto)
+        public int SalvarProduto(dynamic produto)
         {
 
             ProdutoModel novoProduto = new ProdutoModel
@@ -25,7 +25,7 @@ namespace Negocios
                 Nome = produto.Nome,
                 Descricao = produto.Descricao
             };
-            dataAccessLayer.SalvarProduto(novoProduto);
+           return dataAccessLayer.SalvarProduto(novoProduto);
         }
 
         public List<ProdutoResponse> GetListProduct()

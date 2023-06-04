@@ -25,10 +25,10 @@ namespace WebAPI_22_05.Controllers
         }
 
         // POST api/values
-        public void Post([FromBody] ProdutoRequest produto)
+        public int Post([FromBody] ProdutoRequest produto)
         {
      
-            _produtctService.SalvarProduto(produto);
+           return _produtctService.SalvarProduto(produto);
         }
 
         // PUT api/values/5

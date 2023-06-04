@@ -23,7 +23,7 @@ namespace Database
     public interface IDataAccessLayer
     {
         ProdutoModel GetProductById(int id);
-        void SalvarProduto(ProdutoModel product); 
+        int SalvarProduto(ProdutoModel product); 
         List<ProdutoModel> GetListProduct();
         HttpResponseMessage ExcluirProduto(int id);
         void AtualizarProduto(ProdutoModel product);
@@ -196,7 +196,7 @@ namespace Database
             return produto;
         }
 
-        public void SalvarProduto(ProdutoModel produto)
+        public int SalvarProduto(ProdutoModel produto)
         {
             using (var connection = _databaseConnection.GetConnection())
             {
@@ -208,14 +208,16 @@ namespace Database
                         command.Connection = connection;
                         command.CommandType = CommandType.Text;
 
-                        command.CommandText = $"INSERT INTO produto (nome, descricao) VALUES ('{produto.Nome}', '{produto.Descricao}')";
-                        command.ExecuteNonQuery();
+                        command.CommandText = $"INSERT INTO produto (nome, descricao) VALUES ('{produto.Nome}', '{produto.Descricao}') RETURNING id";
+                        int idCriado = (int)command.ExecuteScalar();
+                        return idCriado;
                     }
                     catch (Npgsql.PostgresException e)
                     {
                         // Trate a exceção de violação de campo único aqui
                         // Por exemplo, você pode exibir uma mensagem de erro para o usuário informando que o campo já existe
                         Console.WriteLine("Erro ao cadastrar produto: " + e.Message);
+                        return 0;
                     }
                 }
             }
