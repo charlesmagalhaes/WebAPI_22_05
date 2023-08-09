@@ -25,12 +25,12 @@ namespace Negocios
                 Nome = produto.Nome,
                 Descricao = produto.Descricao
             };
-           return dataAccessLayer.SalvarProduto(novoProduto);
+           return dataAccessLayer.Salvar(novoProduto);
         }
 
         public List<ProdutoResponse> GetListProduct()
         {
-            List<ProdutoModel> listaModel = dataAccessLayer.GetListProduct();
+            List<ProdutoModel> listaModel = dataAccessLayer.BuscarLista();
             List<ProdutoResponse> listaResponse = new List<ProdutoResponse>();
 
             foreach (ProdutoModel produtoModel in listaModel)
@@ -44,7 +44,7 @@ namespace Negocios
 
         public ProdutoResponse GetProduto(int id)
         {
-            var resp = dataAccessLayer.GetProductById(id);
+            var resp = dataAccessLayer.BuscarPorId(id);
             if (resp == null)
             {
                 return new ProdutoResponse(); // Retorna um objeto vazio
@@ -56,7 +56,7 @@ namespace Negocios
         {
 
         
-                var resp = dataAccessLayer.ExcluirProduto(id);
+                var resp = dataAccessLayer.Excluir(id);
                 // Chamada ao método de acesso aos dados
                 return resp;
         }
@@ -71,7 +71,7 @@ namespace Negocios
                 Descricao = produto.Descricao
             };
 
-            dataAccessLayer.AtualizarProduto(novoProduto);
+            dataAccessLayer.Atualizar(novoProduto);
         }
 
 

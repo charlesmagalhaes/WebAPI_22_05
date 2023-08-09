@@ -83,3 +83,17 @@ C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\WebAPI_22_05\bin\Npgsql.xml
 C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\WebAPI_22_05\bin\System.ValueTuple.xml
 C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\WebAPI_22_05\bin\System.Threading.Tasks.Extensions.xml
 C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\WebAPI_22_05\bin\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\WebAPI_22_05\bin\Autofac.dll
+C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\WebAPI_22_05\bin\Autofac.Integration.WebApi.dll
+C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\WebAPI_22_05\bin\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\WebAPI_22_05\bin\System.Buffers.dll
+C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\WebAPI_22_05\bin\System.Diagnostics.DiagnosticSource.dll
+C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\WebAPI_22_05\bin\System.Memory.dll
+C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\WebAPI_22_05\bin\System.Numerics.Vectors.dll
+C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\WebAPI_22_05\bin\Autofac.xml
+C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\WebAPI_22_05\bin\Autofac.Integration.WebApi.xml
+C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\WebAPI_22_05\bin\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\WebAPI_22_05\bin\System.Buffers.xml
+C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\WebAPI_22_05\bin\System.Diagnostics.DiagnosticSource.xml
+C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\WebAPI_22_05\bin\System.Memory.xml
+C:\Users\charles.magalhaes\source\repos\WebAPI_22_05\WebAPI_22_05\bin\System.Numerics.Vectors.xml

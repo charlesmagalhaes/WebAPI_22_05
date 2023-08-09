@@ -4,64 +4,28 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Database
 {
-    public interface IDataAccessLayerPreco
+
+    public class DataAccessLayerPreco : DatabaseConnection, IDataAccessLayer<PrecoModel>
     {
-        PrecoModel GetPrecotById(int id);
-        void SalvarPreco(PrecoModel preco); 
-        List<PrecoModel> GetListPreco();
-        void ExcluirPreco(int id);
-        void AtualizarPreco(PrecoModel preco);
-    }
+      
 
-    public class DataAccessLayerPreco : IDataAccessLayerPreco
-    {
-        private readonly DatabaseConnection _databaseConnection = new DatabaseConnection();
-
-        public DataAccessLayerPreco()
-        {
-          
-        }
-
-        public void AtualizarPreco(PrecoModel preco)
+        public void Atualizar(PrecoModel objeto)
         {
             throw new NotImplementedException();
         }
 
-        public void ExcluirPreco(int id)
-        {
-            using (var connection = _databaseConnection.GetConnection())
-            {
-                connection.Open();
-                using (var command = new Npgsql.NpgsqlCommand())
-                {
-                    try
-                    {
-                        command.Connection = connection;
-                        command.CommandType = CommandType.Text;
-
-                        command.CommandText = $"DELETE FROM preco WHERE produto_id = {id}";
-                        command.ExecuteNonQuery();
-                    }
-                    catch (Npgsql.PostgresException e)
-                    {
-                        // Trate a exceção de violação de campo único aqui
-                        // Por exemplo, você pode exibir uma mensagem de erro para o usuário informando que o campo já existe
-                        Console.WriteLine("Erro excluir preco: " + e.Message);
-                    }
-                }
-            };
-        }
-
-        public List<PrecoModel> GetListPreco()
+        public List<PrecoModel> BuscarLista()
         {
             var precos = new List<PrecoModel>();
 
-            using (var connection = _databaseConnection.GetConnection())
+            using (var connection = GetConnection())
             {
                 connection.Open();
                 using (var command = new NpgsqlCommand("SELECT id, produto_id, preco, data FROM preco; ", connection))
@@ -87,11 +51,11 @@ namespace Database
             return precos;
         }
 
-        public PrecoModel GetPrecotById(int id)
+        public PrecoModel BuscarPorId(int id)
         {
             PrecoModel preco = null;
 
-            using (var connection = _databaseConnection.GetConnection())
+            using (var connection = GetConnection())
             {
                 connection.Open();
                 using (var command = new NpgsqlCommand("SELECT id, produto_id, preco, data FROM preco WHERE produto_id = @id ; ", connection))
@@ -117,10 +81,48 @@ namespace Database
             return preco;
         }
 
-        public void SalvarPreco(PrecoModel preco)
+        public HttpResponseMessage Excluir(int id)
+        {
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                using (var command = new Npgsql.NpgsqlCommand())
+                {
+                    try
+                    {
+                        command.Connection = connection;
+                        command.CommandType = CommandType.Text;
+
+                        command.CommandText = $"DELETE FROM preco WHERE produto_id = {id}";
+                        var result = command.ExecuteScalar();
+                        if (result != null)
+                        {
+                            // Produto excluído com sucesso
+                            var response = new HttpResponseMessage(HttpStatusCode.OK);
+                            response.Content = new StringContent("Exclusão feita com sucesso.", Encoding.UTF8, "text/plain");
+                            return response;
+                        }
+                        else
+                        {
+                            // Produto não foi excluído
+                            var response = new HttpResponseMessage(HttpStatusCode.Conflict);
+                            response.Content = new StringContent("Não foi possível excluir o preco.", Encoding.UTF8, "text/plain");
+                            return response;
+                        }
+                    }
+                    catch (Npgsql.PostgresException e)
+                    {
+                        var response = new HttpResponseMessage(HttpStatusCode.Conflict);
+                        response.Content = new StringContent("Erro ao tentar excluir: " + e.Message, Encoding.UTF8, "text/plain");
+                        return response;
+                    }
+                }
+            };
+        }
+
+        public int Salvar(PrecoModel objeto)
         {
             throw new NotImplementedException();
         }
     }
-
 }

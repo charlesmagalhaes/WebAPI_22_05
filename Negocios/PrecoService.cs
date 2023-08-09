@@ -10,11 +10,11 @@ namespace Negocios.Response
     public class PrecoService : IPrecoService
 
     {
-        private readonly  DataAccessLayerPreco _dataAccessLayerPreco = new DataAccessLayerPreco();
+        public readonly IDataAccessLayer<PrecoModel> _dataAccessLayerPreco;
 
         public PrecoService()
         {
-           
+            _dataAccessLayerPreco =  new DataAccessLayerPreco();
         }
 
         public void Atualizar(PrecoResponse preco)
@@ -24,12 +24,12 @@ namespace Negocios.Response
 
         public void Excluir(int id)
         {
-            _dataAccessLayerPreco.ExcluirPreco(id);
+            _dataAccessLayerPreco.Excluir(id);
         }
 
         public PrecoResponse Get(int id)
         {
-            var resp = _dataAccessLayerPreco.GetPrecotById(id);
+            var resp = _dataAccessLayerPreco.BuscarPorId(id);
 
             if (resp == null)
             {
@@ -43,7 +43,7 @@ namespace Negocios.Response
 
         public List<PrecoResponse> GetLista()
         {
-            List<PrecoModel> listaModel = _dataAccessLayerPreco.GetListPreco();
+            List<PrecoModel> listaModel = _dataAccessLayerPreco.BuscarLista();
             List<PrecoResponse> listaResponse = new List<PrecoResponse>();
 
             foreach (PrecoModel preco in listaModel)

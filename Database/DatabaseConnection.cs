@@ -8,18 +8,9 @@ using Npgsql;
 
 namespace Database
 {
-    public class DatabaseConnection
+    public class DatabaseConnection : IDatabaseConnection<NpgsqlConnection>
     {
-            private readonly string _connectionString = ConfigurationManager.ConnectionStrings["PostgresConexao"].ConnectionString;
-
-        public DatabaseConnection()
-        {
-        }
-
-        public DatabaseConnection(string connectionString)
-            {
-                _connectionString = connectionString;
-            }
+        private readonly string _connectionString = ConfigurationManager.ConnectionStrings["PostgresConexao"].ConnectionString;
 
             public NpgsqlConnection GetConnection()
             {

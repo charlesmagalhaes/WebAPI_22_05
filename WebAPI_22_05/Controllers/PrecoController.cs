@@ -1,4 +1,5 @@
-﻿using Negocios.Models;
+﻿using Negocios.Interfaces;
+using Negocios.Models;
 using Negocios.Response;
 using System;
 using System.Collections.Generic;
@@ -10,11 +11,11 @@ namespace WebAPI_22_05.Controllers
 {
     public class PrecoController : ApiController
     {
-        private readonly PrecoService _precoService = new PrecoService();
+        private readonly IPrecoService _precoService;
 
         public PrecoController()
         {
-          
+            _precoService = new PrecoService();
         }
 
         //GET api/values

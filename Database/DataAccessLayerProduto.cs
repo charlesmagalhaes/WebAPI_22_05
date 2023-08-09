@@ -20,29 +20,12 @@ namespace Database
         public string Mensagem { get; set; }
         public string MensagemErro { get; set; }
     }
-    public interface IDataAccessLayer
-    {
-        ProdutoModel GetProductById(int id);
-        int SalvarProduto(ProdutoModel product); 
-        List<ProdutoModel> GetListProduct();
-        HttpResponseMessage ExcluirProduto(int id);
-        void AtualizarProduto(ProdutoModel product);
-    }
 
-    public class DataAccessLayerProduto : IDataAccessLayer
+    public class DataAccessLayerProduto : IDataAccessLayer<ProdutoModel>
     {
         private DatabaseConnection _databaseConnection = new DatabaseConnection();
 
-        public DataAccessLayerProduto()
-        {
-        }
-
-        public DataAccessLayerProduto(DatabaseConnection databaseConnection)
-        {
-            _databaseConnection = databaseConnection;
-        }
-
-        public void AtualizarProduto(ProdutoModel product)
+        public void Atualizar(ProdutoModel objeto)
         {
             using (var connection = _databaseConnection.GetConnection())
             {
@@ -57,22 +40,22 @@ namespace Database
                         var commandText = "UPDATE produto SET";
                         var parameters = new List<Npgsql.NpgsqlParameter>();
 
-                        if (product.Nome != null)
+                        if (objeto.Nome != null)
                         {
                             commandText += " nome = @Nome,";
-                            parameters.Add(new Npgsql.NpgsqlParameter("@Nome", product.Nome));
+                            parameters.Add(new Npgsql.NpgsqlParameter("@Nome", objeto.Nome));
                         }
 
-                        if (product.Descricao != null)
+                        if (objeto.Descricao != null)
                         {
                             commandText += " descricao = @Descricao,";
-                            parameters.Add(new Npgsql.NpgsqlParameter("@Descricao", product.Descricao));
+                            parameters.Add(new Npgsql.NpgsqlParameter("@Descricao", objeto.Descricao));
                         }
 
                         commandText = commandText.TrimEnd(',');
 
                         command.CommandText = $"{commandText} WHERE id = @Id;";
-                        parameters.Add(new Npgsql.NpgsqlParameter("@Id", product.Id));
+                        parameters.Add(new Npgsql.NpgsqlParameter("@Id", objeto.Id));
                         command.Parameters.AddRange(parameters.ToArray());
 
                         command.ExecuteNonQuery();
@@ -87,9 +70,7 @@ namespace Database
             }
         }
 
-
-
-        public HttpResponseMessage ExcluirProduto(int id)
+        public HttpResponseMessage Excluir(int id)
         {
             using (var connection = _databaseConnection.GetConnection())
             {
@@ -133,11 +114,7 @@ namespace Database
         }
 
 
-
-
-
-
-        public List<ProdutoModel> GetListProduct()
+        public List<ProdutoModel> BuscarLista()
         {
             var produtos = new List<ProdutoModel>();
 
@@ -167,7 +144,7 @@ namespace Database
         }
 
 
-        public ProdutoModel GetProductById(int id)
+        public ProdutoModel BuscarPorId(int id)
         {
             ProdutoModel produto = null;
 
@@ -196,7 +173,7 @@ namespace Database
             return produto;
         }
 
-        public int SalvarProduto(ProdutoModel produto)
+        public int Salvar(ProdutoModel objeto)
         {
             using (var connection = _databaseConnection.GetConnection())
             {
@@ -208,7 +185,7 @@ namespace Database
                         command.Connection = connection;
                         command.CommandType = CommandType.Text;
 
-                        command.CommandText = $"INSERT INTO produto (nome, descricao) VALUES ('{produto.Nome}', '{produto.Descricao}') RETURNING id";
+                        command.CommandText = $"INSERT INTO produto (nome, descricao) VALUES ('{objeto.Nome}', '{objeto.Descricao}') RETURNING id";
                         int idCriado = (int)command.ExecuteScalar();
                         return idCriado;
                     }
@@ -224,5 +201,5 @@ namespace Database
         }
     }
 
-
-}
+      
+    }
